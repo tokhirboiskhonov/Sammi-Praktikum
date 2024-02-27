@@ -1,4 +1,7 @@
-let numberOfSeries = +prompt("Nechta serial kordingiz?", "");
+let numberOfSeries;
+
+startApp();
+
 const seriesDB = {
   count: numberOfSeries,
   series: {},
@@ -7,27 +10,62 @@ const seriesDB = {
   private: false,
 };
 
-for (let i = 0; i < 2; i++) {
-  let lastSerial = prompt("Oxirgi ko’rgan serialingiz?", "");
-  let countSerial = +prompt("Nechi baxo berasiz?", "");
+setFavouriteSeries();
+detectingLevel();
+writeGenres();
+showDB(seriesDB.private);
 
-  if (
-    lastSerial !== null &&
-    countSerial !== null &&
-    lastSerial !== "" &&
-    countSerial !== ""
+function startApp() {
+  numberOfSeries = +prompt("Nechta serial kordingiz?", "");
+
+  while (
+    numberOfSeries == "" ||
+    numberOfSeries == null ||
+    isNaN(numberOfSeries)
   ) {
-    seriesDB.series[lastSerial] = countSerial;
-  } else {
-    i--;
+    numberOfSeries = +prompt("Nechta serial kordingiz?", "");
   }
 }
 
-if (seriesDB.count < 5) {
-  console.log("Kam serial ko’ripsiz");
-} else if (seriesDB.count >= 5 && seriesDB.count < 10) {
-  console.log("Siz classik tamoshabin ekansiz");
-} else {
-  console.log("Siz serialchi zvezda ekansiz");
+function setFavouriteSeries() {
+  for (let i = 0; i < seriesDB.count; i++) {
+    let lastSerial = prompt(`Oxirgi ko’rgan serialingiz ${i + 1} ?`, "");
+    let countSerial = +prompt(`Nechi baxo berasiz? ${i + 1}`, "");
+
+    if (
+      lastSerial !== null &&
+      countSerial !== null &&
+      lastSerial !== "" &&
+      countSerial !== ""
+    ) {
+      seriesDB.series[lastSerial] = countSerial;
+    } else {
+      i--;
+    }
+  }
 }
-console.log(seriesDB);
+
+function detectingLevel() {
+  if (seriesDB.count < 5) {
+    console.log("Kam serial ko’ripsiz");
+  } else if (seriesDB.count >= 5 && seriesDB.count < 10) {
+    console.log("Siz classik tamoshabin ekansiz");
+  } else if (seriesDB.count > 10) {
+    console.log("Siz serialchi zvezda ekansiz");
+  }
+}
+
+function writeGenres() {
+  for (let i = 0; i < 3; i++) {
+    const genre = prompt(`Yaxshi ko’rgan janringiz ${i + 1}`);
+    seriesDB.genres[i] = genre;
+  }
+}
+
+function showDB(isPrivate) {
+  if (!isPrivate) {
+    console.log(seriesDB);
+  } else {
+    console.log("Ma'lumot mahfiy saqlanmoqda");
+  }
+}
