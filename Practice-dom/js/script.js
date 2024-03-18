@@ -12,7 +12,7 @@ let seriesArr = {
   ],
 };
 // remove advertising block
-promoAdv.remove();
+promoAdvs.forEach((item) => item.remove());
 
 promoGenre.textContent = "Comedy";
 promoBgImg.style.backgroundImage = "url('/Practice-dom/img/2.jpg')";
