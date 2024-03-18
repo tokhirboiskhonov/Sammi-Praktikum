@@ -16,3 +16,13 @@ promoAdvs.forEach((item) => item.remove());
 
 promoGenre.textContent = "Comedy";
 promoBgImg.style.backgroundImage = "url('/Practice-dom/img/2.jpg')";
+
+// 1-version
+seriesArr.series.forEach((item, idx) => {
+  promoList.innerHTML += `
+	 <li class="promo__interactive-item">
+	 ${++idx} ${item}
+		 <div class="delete"></div>
+	 </li>
+	 `;
+});
